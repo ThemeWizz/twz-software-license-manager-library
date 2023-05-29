@@ -1,0 +1,24 @@
+{
+    "name": "themewizz/twz-software-license-manager-library",
+    "type": "library",
+    "description": "This class can be used in a PHP application to contact a WordPress based license server.",
+    "keywords": ["plugin usage", "license", "tracking"],
+    "homepage": "https://github.com/themewizz/twz-software-license-manager-library",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Steven Wagner",
+            "email": "stevenw@sersart.com",
+            "homepage": "https://www.themewizz.com/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "themewizz\\license\\": "src/"
+        }
+    }
+}
