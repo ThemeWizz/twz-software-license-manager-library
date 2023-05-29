@@ -1,7 +1,7 @@
 <?php
 namespace themewizz\license;
 
-class TWZ_Software_License_Manager_library
+class license
 {
     /**  
      * The secret key.
@@ -214,14 +214,14 @@ class TWZ_Software_License_Manager_library
      *
      * @return integer
      */
-    function daysToExpiry()
-    {
-        $todayDate = new DateTime('now');
-        $expiryDate = new DateTime($this->details->date_expiry);
-        $daysToExpiry = $todayDate->diff($expiryDate);
+    // function daysToExpiry()
+    // {
+    //     $todayDate = new DateTime('now');
+    //     $expiryDate = new DateTime($this->details->date_expiry);
+    //     $daysToExpiry = $todayDate->diff($expiryDate);
 
-        return intval($daysToExpiry->format('%R%a'));
-    }
+    //     return intval($daysToExpiry->format('%R%a'));
+    // }
 
     // ---------------------------------------------------------------------------
     /**
@@ -316,9 +316,9 @@ class TWZ_Software_License_Manager_library
                 $domains = substr($domains, 0, -2); // Remove last comma and blank
             }
             $daysleft = "";
-            if ($daysToExpiry = $this->daysToExpiry()) {
-                $daysleft = " (" . $daysToExpiry . " " . $this->lang['lic_daysleft'] . ")";
-            }
+            // if ($daysToExpiry = $this->daysToExpiry()) {
+            //     $daysleft = " (" . $daysToExpiry . " " . $this->lang['lic_daysleft'] . ")";
+            // }
 
             $details = "<div style=\"height:20px;\"></div>";
             $details .= "<table class=\"table table-hover\">
