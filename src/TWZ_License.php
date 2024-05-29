@@ -38,7 +38,8 @@ class TWZ_License
         $parms = array(
             'twz_license_action' => 'information',
             'twz_license_verification_key' => urlencode($this->verification_key),
-            'twz_license_key' => urlencode($this->license_key)
+            'twz_license_key' => urlencode($this->license_key),
+            'twz_license_signature' => get_option('twz_license_signature')
         );
         $this->details = (object) $this->callAPI($parms);
     }
@@ -65,11 +66,17 @@ class TWZ_License
             'twz_license_action' => 'activation',
             'twz_license_verification_key' => urlencode($this->verification_key),
             'twz_license_key' => urlencode($this->license_key),
-            'twz_new_domain' => $_SERVER['SERVER_NAME']
+            'twz_new_domain' =>  preg_replace('/^www\./', '', $_SERVER['SERVER_NAME']),
         );
 
         $response = $this->callAPI($parms);
-        
+        if (!empty($response) && $response['result'] !== 'error') {
+            if (isset($response['license_key']) && isset($response['license_signature'])) {
+                $license_key = $response['license_key'];
+                $license_signature = $response['license_signature'];
+                update_option('license_signature', $license_signature);
+            }
+        }
         return $response;
     }
 
@@ -79,11 +86,12 @@ class TWZ_License
             'twz_license_action' => 'deactivation',
             'twz_license_verification_key' => urlencode($this->verification_key),
             'twz_license_key' => urlencode($this->license_key),
+            'twz_license_signature' => get_option('twz_license_signature'),
             'twz_domain' => $_SERVER['SERVER_NAME']
         );
 
         $response = $this->callAPI($parms);
- 
+
         return $response;
     }
 
@@ -103,7 +111,7 @@ class TWZ_License
 
         if (!is_wp_error($response) && 200 == $response['response']['code']) {
             return json_decode($response['body'], true);
-        } 
+        }
         return [];
     }
 }
